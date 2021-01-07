@@ -1,9 +1,7 @@
-FROM node:alpine
-LABEL app="simple-node-application"
-ENV NPM_CONFIG_LOGLEVEL warn
-WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
-COPY . /usr/src/app/
-RUN npm install --production
-EXPOSE 3000
-ENTRYPOINT ["npm", "start"]
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install -y redis-server
+RUN apt-get install redis-sentinel redis-redisearch
+ENV REDIS_HOST localhost
+ENV REDIS_PORT 6379
+CMD ["redis-server"]
